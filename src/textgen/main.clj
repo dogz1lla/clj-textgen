@@ -6,13 +6,6 @@
 
 
 ;; ---------------------------------------------------------
-;; import words- and letters-related things
-;; ---------------------------------------------------------
-(def word-frequencies words/word-frequencies)
-(def word-markov markov/transition-matrix-map)
-(def first-letter-frequencies first/first-letter-frequencies)
-
-;; ---------------------------------------------------------
 ;; calculate cdfs from pdfs
 ;; ---------------------------------------------------------
 (defn generate-word-cdf
@@ -20,19 +13,19 @@
   function of the frequencies of
   lengths of words from a corpus."
   []
-  (utils/generate-cdf word-frequencies))
+  (utils/generate-cdf words/word-frequencies))
 
 (defn generate-letter-transition-proba
   "Generate transition cdfs for each letter using rows of
   the transition probability matrix."
   []
-  (zipmap (keys word-markov) (map utils/generate-cdf (vals word-markov))))
+  (zipmap (keys markov/transition-matrix-map) (map utils/generate-cdf (vals markov/transition-matrix-map))))
 
 (defn generate-first-letter-cdf
   "Generate a cdf of letters in the first position in the
   word."
   []
-  (utils/generate-cdf first-letter-frequencies))
+  (utils/generate-cdf first/first-letter-frequencies))
 
 (def word-cdf (generate-word-cdf))
 (def letter-transition-cdf (generate-letter-transition-proba))
