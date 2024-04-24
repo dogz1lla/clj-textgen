@@ -1,4 +1,5 @@
 (ns textgen.markov-letter
+  "Create a 'transition matrix' based off of the bigram probabilities."
   (:require [textgen.utils :as utils]))
 
 ;; P. Norvig's article: http://norvig.com/mayzner.html 
