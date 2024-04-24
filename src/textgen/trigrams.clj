@@ -1,4 +1,5 @@
 (ns textgen.trigrams
+  "Scrape the data for probabilities of trigrams in English language."
   (:require [clojure.string :as s]
             [textgen.utils :as utils]))
 

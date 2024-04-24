@@ -2,6 +2,7 @@
   (:require [textgen.word-length :as words]
             [textgen.markov-letter :as markov]
             [textgen.first-letter :as first]
+            [textgen.trigrams :as trigram]
             [textgen.utils :as utils]))
 
 ;; ---------------------------------------------------------
@@ -26,9 +27,15 @@
   []
   (utils/generate-cdf first/first-letter-frequencies))
 
+(defn generate-trigram-cdf
+  "Generate a cdf of trigrams."
+  []
+  (utils/generate-cdf trigram/trigram-frequencies))
+
 (def word-cdf (generate-word-cdf))
 (def letter-transition-cdf (generate-letter-transition-proba))
 (def first-letter-cdf (generate-first-letter-cdf))
+(def trigram-cdf (generate-trigram-cdf))
 
 ;; ---------------------------------------------------------
 ;; draw from cdfs
@@ -51,6 +58,11 @@
   []
   (utils/draw-from-cdf first-letter-cdf))
 
+(defn draw-trigram
+  "Draw a trigram."
+  []
+  (utils/draw-from-cdf trigram-cdf))
+
 (defn generate-markov-chain-letters
   "Generate a random word as a markov process."
   [length]
@@ -61,13 +73,31 @@
         word
         (recur (inc i) (str word (make-markov-step (subs word i))))))))
 
+(defn build-up-word
+  [word-so-far final-length]
+  (if (= final-length 1)
+    ; if one char word -> always either a or I
+    (if (< 0.5 (rand)) "a" "I")
+    ; else -> build the word up with markov and occasionally with trigrams if long enough
+    (let [have (count word-so-far)
+          todo (- final-length have)]
+      (if (= have final-length)
+        word-so-far
+        (cond
+          (< todo 3) (recur (str word-so-far (generate-markov-chain-letters todo)) final-length)
+          :else (if (< 0.2 (rand))
+                  ; in 20% of the cases use a trigram
+                  (recur (str word-so-far (draw-trigram)) final-length)
+                  ; otherwise default to markov digrams
+                  (recur (str word-so-far (generate-markov-chain-letters 2)) final-length)))))))
+
 (defn generate-random-word
-  "Wrapper made because one letter words shoud have special
-  treatment."
+  "Wrapper made because one letter words shoud have special treatment."
   [length]
   (if (= length 1)
     (if (< 0.5 (rand)) "a" "I")
-    (generate-markov-chain-letters length)))
+    #_(generate-markov-chain-letters length)
+    (build-up-word "" length)))
 
 (defn generate-random-sentence
   "Generate a sentence of random words."
@@ -88,3 +118,7 @@
   "Generate a sequence of random paragraphs."
   [num-paragraphs]
   (clojure.string/join \newline (map generate-random-paragraph (repeat num-paragraphs 5))))
+
+(comment
+  (generate-random-word 7)
+  (generate-random-text 5))
