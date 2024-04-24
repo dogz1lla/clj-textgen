@@ -4,7 +4,6 @@
             [textgen.first-letter :as first]
             [textgen.utils :as utils]))
 
-
 ;; ---------------------------------------------------------
 ;; calculate cdfs from pdfs
 ;; ---------------------------------------------------------
