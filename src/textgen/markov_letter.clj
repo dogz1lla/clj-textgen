@@ -28,13 +28,13 @@
 
 (defn make-transition-matrix
   []
-    (->> utils/alphabet
-      (map (fn [letter]
-             (->> (find-by-first-letter letter)
-                  (sort)
-                  (map last)
-                  (into []))))
-      (into [])))
+  (->> utils/alphabet
+       (map (fn [letter]
+              (->> (find-by-first-letter letter)
+                   (sort)
+                   (map last)
+                   (into []))))
+       (into [])))
 
 (defn normalize-rows
   [matrix]
