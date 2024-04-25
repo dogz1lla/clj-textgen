@@ -23,8 +23,12 @@ This way, to generate a random word one can draw a word length from the correspo
 Use `generate-random-word`, `generate-random-sentence`, `generate-random-paragraph` or `generate-random-text` from src/textgen/main.clj.
 
 ## Example of generated text 
-Ri bente har heered aco. Ale an sthen desop thek. Alyon amsi alssatou ongu whav. Thaneosa rt th omit ero. Dungrle rti atwaic i ac. 
+Teby srefe porb wdaonligow ove. Int ye abrero sellool thbe. Ua trm ypaust ven golclivicy. Pa of le meta estsi. Lyuicti hass fech yalsli ewo. 
 
-Stn lc ai cubs an. Fachedv onilin ssitupa wi sefr. Reve byse ancist a heratoforerm. Bre ppa in or alitou. Qut rndense kndof het i. 
+Fth snpunio ierntihew tioo seqke. Oveb ac ablb an ba. Wn kinyan alo opnisi iti. Ertol ale hoandc ut aziw. Omeak ar te ymeoune lis. 
 
-Ti bi uns of rar. Heddewe anyommme risso pan angeretrst. Pltif acuseigi nthist abun alleape. Mede eng frys nstarhed rst. Lds todmere ath ts pt.
+Ithmiso ervf vireasicaw alst ldh. I ditdco osti in ystdoeid. Tioss xel idaer oft extodtd. Tima groeasheri ilr teso tran. Fecishym ndsee bo odef ilirmido.
+
+Heii ve ac sua he. Avd fordinh xtr ifei shinkith. Has thdinh ce acly widisexpde. Nnelda poliondanteh bacypnsuha uthit pub. Npa cke esti hert weova.
+
+Nre hate teob pan chaa. Sanen coo peres monsi in. At cimar andistt aniutusre ecamo. Tivmeta gcosix seningof erwatps niaryta. Nth tedempo rn ti reeeth.

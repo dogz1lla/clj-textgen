@@ -22,4 +22,7 @@
 (def trigram-frequencies (generate-trigram-freq-distr))
 
 (comment
-  (->> trigram-frequencies (sort-by second) (take-last 5)))
+  (->> trigram-frequencies (sort-by second) (take-last 5))
+  (def filter-fn (fn [tri] (every? #(utils/consonants (str %)) tri)))
+  (->> (keys trigram-frequencies)
+       (filter filter-fn)))

@@ -1,8 +1,7 @@
 (ns textgen.first-letter
   (:require [textgen.utils :as utils]))
 
-;; Scrape relevant tabular data from a great blog post by
-;; Mr. Norvig
+;; Scrape relevant tabular data from a great blog post by Mr. Norvig
 
 (def url "http://norvig.com/mayzner.html")
 
