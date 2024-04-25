@@ -9,21 +9,17 @@
 ;; calculate cdfs from pdfs
 ;; ---------------------------------------------------------
 (defn generate-word-cdf
-  "Generate a cumulative distribution
-  function of the frequencies of
-  lengths of words from a corpus."
+  "Generate a cumulative distribution function of the frequencies of lengths of words from a corpus."
   []
   (utils/generate-cdf words/word-frequencies))
 
 (defn generate-letter-transition-proba
-  "Generate transition cdfs for each letter using rows of
-  the transition probability matrix."
+  "Generate transition cdfs for each letter using rows of the transition probability matrix."
   []
   (zipmap (keys markov/transition-matrix-map) (map utils/generate-cdf (vals markov/transition-matrix-map))))
 
 (defn generate-first-letter-cdf
-  "Generate a cdf of letters in the first position in the
-  word."
+  "Generate a cdf of letters in the first position in the word."
   []
   (utils/generate-cdf first/first-letter-frequencies))
 
@@ -41,15 +37,13 @@
 ;; draw from cdfs
 ;; ---------------------------------------------------------
 (defn draw-word-length
-  "Draw a word length (an int from 1 to 18
-  currently)."
+  "Draw a word length (an int from 1 to 18 currently)."
   []
   (utils/draw-from-cdf word-cdf))
 
 (defn make-markov-step
-  "Given a letter (ie current state in markov process)
-  draw the next letter (ie new state) according to transition
-  probability matrix."
+  "Given a letter (ie current state in markov process) draw the next letter (ie new state)
+  according to transition probability matrix."
   [prev-letter]
   (utils/draw-from-cdf (get letter-transition-cdf prev-letter)))
 
@@ -75,29 +69,27 @@
 
 (defn build-up-word
   [word-so-far final-length]
-  (if (= final-length 1)
-    ; if one char word -> always either a or I
-    (if (< 0.5 (rand)) "a" "I")
-    ; else -> build the word up with markov and occasionally with trigrams if long enough
-    (let [have (count word-so-far)
-          todo (- final-length have)]
-      (if (= have final-length)
-        word-so-far
-        (cond
-          (< todo 3) (recur (str word-so-far (generate-markov-chain-letters todo)) final-length)
-          :else (if (< 0.2 (rand))
-                  ; in 20% of the cases use a trigram
-                  (recur (str word-so-far (draw-trigram)) final-length)
-                  ; otherwise default to markov digrams
-                  (recur (str word-so-far (generate-markov-chain-letters 2)) final-length)))))))
+  (let [have (count word-so-far)
+        todo (- final-length have)]
+    (if (= have final-length)
+      word-so-far
+      (cond
+        (< todo 3) (recur (str word-so-far (generate-markov-chain-letters todo)) final-length)
+        :else (if (< 0.2 (rand))
+                ; in 20% of the cases use a trigram
+                (recur (str word-so-far (draw-trigram)) final-length)
+                ; otherwise default to markov digrams
+                (recur (str word-so-far (generate-markov-chain-letters 2)) final-length))))))
 
 (defn generate-random-word
   "Wrapper made because one letter words shoud have special treatment."
   [length]
   (if (= length 1)
     (if (< 0.5 (rand)) "a" "I")
-    #_(generate-markov-chain-letters length)
-    (build-up-word "" length)))
+    (let [word (build-up-word "" length)]
+      (if (utils/n-consonants-in-a-row? word 4)
+        (recur length)
+        word))))
 
 (defn generate-random-sentence
   "Generate a sentence of random words."
@@ -120,5 +112,6 @@
   (clojure.string/join \newline (map generate-random-paragraph (repeat num-paragraphs 5))))
 
 (comment
+  (build-up-word "bbbb" 7)
   (generate-random-word 7)
   (generate-random-text 5))
